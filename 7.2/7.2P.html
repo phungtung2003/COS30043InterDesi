@@ -1,0 +1,67 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<title>7.2P</title> 
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+</head> 
+<body> 
+	<div id="app">
+      	<app-readjson></app-readjson>   
+	</div>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3"></script>   
+	<script>  <!--   embedded this short js here, for easy distribution -->
+	const app = Vue.createApp({	})
+	app.component('app-readjson', {
+		data: function(){
+			return  {err:'',msg:''} 
+		},  
+		template: `	<div>
+	<table class="table table-striped table-hover">
+	<thead><tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>CP</th>
+            <th>Type</th>
+        </tr></thead>
+        <tbody>
+
+        <tr v-for="s in msg">
+            <td>{{ s.code }}</td>
+            <td>{{ s.desc }}</td>
+            <td>{{ s.cp }}</td>
+            <td>{{ s.type }}</td>
+        </tr>
+        </tbody>
+        </table>
+
+		</div>`,
+		
+		
+		mounted() { 
+			var self = this;
+			var url = 'js/units.json';
+
+			fetch(url)      
+			.then( response =>{
+			 
+			  return response.json( );
+			})
+			.then( data =>{
+			 
+			  self.msg=data;
+			})
+			.catch(error => {
+			  self.err=error
+			});
+		 
+  		}
+})
+app.mount('#app')
+
+	</script>
+</body> 
+</html>
